@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheilamay Canonigo Market Place</title>
+    <meta name="description" content="Sheilamay Canonigo Market Place – Your trusted general store in Bacolod City. Shop grocery essentials, household supplies, school & office needs, and enjoy local delivery!">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap">
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --secondary: #0d2040;
+            --accent: #ff9800;
+            --background: #fff;
+            --muted: #757575;
+            --card-bg: #f8f9fb;
+            --border: #ff9800;
+            --cart-fab-bg: #fff;
+            --cart-fab-color: #d32f2f;
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--background);
+            color: var(--secondary);
+        }
+        header {
+            background: var(--background);
+            border-bottom: 3px solid var(--border);
+            box-shadow: 0 2px 6px rgba(211,47,47,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 2rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: box-shadow 0.2s;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 70px;
+            width: 70px;
+            min-width: 70px;
+            background: #fff;
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            margin-right: 1.2rem;
+        }
+        .logo-texts {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .company-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .company-type {
+            font-size: 1.04rem;
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            transition: none;
+        }
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            transition: background 0.2s, color 0.2s;
+        }
+        nav a:hover, nav a.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .cart-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.48rem 1.25rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 1.7rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.08);
+            transition: background 0.2s;
+        }
+        .cart-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-left: 1rem;
+            transition: none;
+        }
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            background: var(--primary);
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: all 0.25s;
+        }
+        .burger.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .burger.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        @media (max-width: 900px) {
+            nav {
+                gap: 1rem;
+            }
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .logo {
+                margin-bottom: 0;
+            }
+            .logo img {
+                height: 60px;
+                width: 60px;
+                min-width: 60px;
+            }
+            nav {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 220px;
+                background: var(--background);
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 80px 1.5rem 1.5rem 1.5rem;
+                gap: 1rem;
+                box-shadow: -3px 0 15px rgba(211,47,47,0.07);
+                border-left: 2px solid var(--border);
+                transform: translateX(100%);
+                transition: transform 0.3s;
+                z-index: 1100;
+            }
+            nav.open {
+                transform: translateX(0);
+            }
+            .cart-btn {
+                margin-left: 0;
+                width: 100%;
+            }
+            .burger {
+                display: flex;
+                position: relative;
+                z-index: 1200;
+            }
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .hero {
+            background: #fff5f5;
+            border-radius: 1.5rem;
+            border: 2.5px solid var(--border);
+            padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(211,47,47,0.06);
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.18rem;
+            margin-bottom: 1.25rem;
+            color: var(--secondary);
+        }
+        .contact-banner {
+            color: var(--secondary);
+            font-size: 1.07rem;
+            margin: 1rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .feature {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            padding: 1.15rem 2rem;
+            border-radius: 1rem;
+            min-width: 220px;
+            font-size: 1.05rem;
+            text-align: center;
+            color: var(--secondary);
+            box-shadow: 0 2px 8px rgba(255,152,0,0.08);
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .about, .delivery-info, .faq, .testimonials {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.04);
+            border: 2px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .about strong {
+            color: var(--primary);
+        }
+        .products-section {
+            margin-bottom: 2rem;
+        }
+        .products-section > p {
+            margin-bottom: 1.5rem;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.04);
+            border: 2px solid var(--accent);
+            padding: 1.25rem 0.7rem 1.2rem 0.7rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .product-card img {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            margin-bottom: 0.75rem;
+            background: #fff5f5;
+            border-radius: 0.5rem;
+            border: 2px solid var(--border);
+        }
+        .product-card .product-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            font-size: 1.09rem;
+            color: var(--secondary);
+        }
+        .product-card .product-desc {
+            font-size: 0.98rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .product-card .product-price {
+            font-size: 1.09rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .product-card .product-qty {
+            font-size: 0.97rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .product-card button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.47rem 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1rem;
+            margin-top: 3px;
+        }
+        .product-card button:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .cart-section {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.04);
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .cart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .cart-items {
+            margin-bottom: 1rem;
+        }
+        .cart-empty {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+        .cart-summary {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        .checkout-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.65rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1.05rem;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.07);
+        }
+        .checkout-btn:disabled {
+            background: var(--muted);
+            color: #fff;
+            cursor: not-allowed;
+        }
+        .checkout-btn:hover:enabled {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .contact-details {
+            flex: 1 1 320px;
+        }
+        .business-hours {
+            flex: 1 1 200px;
+            background: #fff5f5;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.97rem;
+            border: 2px solid var(--border);
+            color: var(--secondary);
+        }
+        .testimonials-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .testimonials-list li {
+            margin-bottom: 1rem;
+            font-style: italic;
+            color: var(--muted);
+        }
+        .faq-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .faq-list li {
+            margin-bottom: 1rem;
+        }
+        .faq-q {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        footer {
+            background: var(--background);
+            color: var(--secondary);
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+            border-top: 3px solid var(--border);
+            margin-top: 2rem;
+        }
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: underline;
+            margin: 0 0.75rem;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        .footer-contact {
+            font-size: 0.93rem;
+            color: var(--muted);
+        }
+        /* FAB cart button */
+        .cart-fab {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 2000;
+            background: var(--cart-fab-bg);
+            color: var(--cart-fab-color);
+            border: 2.5px solid var(--border);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 6px 18px rgba(211,47,47,0.10);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s, background 0.2s;
+        }
+        .cart-fab:hover {
+            box-shadow: 0 10px 30px rgba(211,47,47,0.18);
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .cart-fab-count {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.98rem;
+            font-weight: 700;
+            border: 2px solid #fff;
+        }
+        /* Cart pop-up modal */
+        .cart-modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 2100;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13,32,64,0.19);
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-modal-bg.active {
+            display: flex;
+        }
+        .cart-modal {
+            background: var(--card-bg);
+            border-radius: 1.2rem;
+            box-shadow: 0 12px 32px rgba(211,47,47,0.18);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            min-width: 320px;
+            max-width: 94vw;
+            border: 3px solid var(--border);
+            position: relative;
+        }
+        .cart-modal-title {
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .cart-modal-items {
+            margin-bottom: 1rem;
+        }
+        .cart-modal-empty {
+            color: var(--muted);
+            font-size: 1rem;
+            text-align: center;
+        }
+        .cart-modal-summary {
+            font-size: 1.12rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--secondary);
+        }
+        .cart-modal-btn-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .cart-modal-close {
+            background: var(--muted);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.55rem 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.03rem;
+            transition: background 0.2s;
+        }
+        .cart-modal-close:hover {
+            background: var(--primary);
+        }
+        .cart-modal-checkout {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.55rem 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.03rem;
+            transition: background 0.2s;
+        }
+        .cart-modal-checkout:disabled {
+            background: var(--muted);
+            color: #fff;
+            cursor: not-allowed;
+        }
+        .cart-modal-checkout:hover:enabled {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .cart-modal-remove {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 1.2rem;
+            font-size: 0.97rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 8px;
+            padding: 2px 10px;
+            transition: background 0.2s;
+        }
+        .cart-modal-remove:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .features {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 1rem 0.5rem;
+            }
+            .hero {
+                padding: 1rem;
+            }
+            .features {
+                flex-direction: column;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+            .cart-modal {
+                min-width: 90vw;
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+        }
+    </style>
+    <script>
+        // CART LOGIC
+        let cart = [];
+        function addToCart(name, price) {
+            const found = cart.find(item => item.name === name);
+            if (found) {
+                found.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            updateCartDisplay();
+            updateCartFab();
+        }
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartDisplay();
+            updateCartFab();
+        }
+        function updateCartDisplay() {
+            // Main cart section
+            const cartItemsDiv = document.getElementById('cart-items');
+            const cartSummaryDiv = document.getElementById('cart-summary');
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+                cartSummaryDiv.innerHTML = '';
+                document.getElementById('checkout-btn').disabled = true;
+            } else {
+                let html = '';
+                let total = 0;
+                cart.forEach(item => {
+                    html += `<div>
+                        <strong>${item.name}</strong> x ${item.qty} - ₱${(item.price * item.qty).toFixed(2)}
+                        <button onclick="removeFromCart('${item.name}')" style="margin-left:10px;background:#ffd600;color:#d32f2f;border:none;border-radius:12px;cursor:pointer;padding:2px 10px;">Remove</button>
+                    </div>`;
+                    total += item.price * item.qty;
+                });
+                cartItemsDiv.innerHTML = html;
+                cartSummaryDiv.innerHTML = `<div class="cart-summary">Total: ₱${total.toFixed(2)}</div>`;
+                document.getElementById('checkout-btn').disabled = false;
+            }
+            // Modal cart
+            updateCartModal();
+        }
+        function updateCartFab() {
+            var cartFabCount = document.getElementById('cart-fab-count');
+            var count = cart.reduce((acc, item) => acc + item.qty, 0);
+            cartFabCount.textContent = count;
+        }
+        function checkout() {
+            window.location.href = "order-summary.html";
+        }
+
+        // BURGER BUTTON & MOBILE NAV LOGIC
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartDisplay();
+            updateCartFab();
+
+            var burger = document.getElementById('burger-menu');
+            var nav = document.getElementById('main-nav');
+            if (burger && nav) {
+                burger.addEventListener('click', function() {
+                    burger.classList.toggle('open');
+                    nav.classList.toggle('open');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 600) {
+                        if (!nav.contains(e.target) && !burger.contains(e.target)) {
+                            nav.classList.remove('open');
+                            burger.classList.remove('open');
+                        }
+                    }
+                });
+
+                var navLinks = nav.querySelectorAll('a');
+                navLinks.forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 600) {
+                            nav.classList.remove('open');
+                            burger.classList.remove('open');
+                        }
+                    });
+                });
+            }
+
+            // Cart FAB & Modal logic
+            var cartFab = document.getElementById('cart-fab');
+            var cartModalBg = document.getElementById('cart-modal-bg');
+            var closeModalBtn = document.getElementById('cart-modal-close');
+            var checkoutModalBtn = document.getElementById('cart-modal-checkout');
+            cartFab.addEventListener('click', function() {
+                cartModalBg.classList.add('active');
+                updateCartModal();
+            });
+            closeModalBtn.addEventListener('click', function() {
+                cartModalBg.classList.remove('active');
+            });
+            cartModalBg.addEventListener('click', function(e) {
+                if (e.target === cartModalBg) {
+                    cartModalBg.classList.remove('active');
+                }
+            });
+            checkoutModalBtn.addEventListener('click', function() {
+                checkout();
+            });
+        });
+
+        // Update Cart Modal content
+        function updateCartModal() {
+            var cartModalItemsDiv = document.getElementById('cart-modal-items');
+            var cartModalSummaryDiv = document.getElementById('cart-modal-summary');
+            var checkoutModalBtn = document.getElementById('cart-modal-checkout');
+            if (!cartModalItemsDiv || !cartModalSummaryDiv || !checkoutModalBtn) return;
+            if (cart.length === 0) {
+                cartModalItemsDiv.innerHTML = '<div class="cart-modal-empty">Your cart is empty.</div>';
+                cartModalSummaryDiv.innerHTML = '';
+                checkoutModalBtn.disabled = true;
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                html += `<div>
+                    <strong>${item.name}</strong> x ${item.qty} - ₱${(item.price * item.qty).toFixed(2)}
+                    <button class="cart-modal-remove" onclick="removeFromCart('${item.name}')">Remove</button>
+                </div>`;
+                total += item.price * item.qty;
+            });
+            cartModalItemsDiv.innerHTML = html;
+            cartModalSummaryDiv.innerHTML = `<div class="cart-modal-summary">Total: ₱${total.toFixed(2)}</div>`;
+            checkoutModalBtn.disabled = false;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image/LOGO.png" alt="Sheilamay Canonigo Market Place Logo" style="background:#fff;">
+            <div class="logo-texts">
+                <div class="company-name">SHEILAMAY CANONIGO</div>
+                <div class="company-type">Market Place • General Store</div>
+            </div>
+        </div>
+        <button id="burger-menu" class="burger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="main-nav">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+            <a href="#faq">FAQ</a>
+            <a href="#delivery">Delivery Info</a>
+            <button class="cart-btn" onclick="document.getElementById('cart-section').scrollIntoView({behavior:'smooth'})">View Cart</button>
+        </nav>
+    </header>
+    <main>
+        <section class="hero" id="home">
+            <h1>Welcome to Sheilamay Canonigo Market Place!</h1>
+            <p>Your friendly neighborhood general store in the heart of Bacolod City.<br>
+                From daily essentials to seasonal finds, we’re proud to serve our local community with affordable and quality products. Whether you’re looking for pantry staples, toiletries, cleaning supplies, or school and office needs — nandito kami para sa inyo!</p>
+            <div class="contact-banner">
+                🛒 Everyday Needs, Always Available<br>
+                🏠 Located at #67 Rosal Street, San Nicolas, Bacolod City<br>
+                📞 Call or text us: +63 961 203 7548<br>
+                📦 We deliver within Bacolod and nearby barangays
+            </div>
+            <div class="features">
+                <div class="feature">Locally Owned &amp; Operated</div>
+                <div class="feature">Trusted Spot in Barangay San Nicolas</div>
+                <div class="feature">Sulit na Serbisyo, Tapat na Presyo</div>
+                <div class="feature">Genuine Customer Care</div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <h2>About Us</h2>
+            <p>
+                <strong>A Local Store Built on Trust and Community</strong><br>
+                Sheilamay Canonigo Market Place started as a small sari-sari store and grew through the years to become one of the most reliable general stores in Barangay San Nicolas. Founded by Sheilamay Canonigo in 2018, our goal has always been to bring quality products closer to home — especially for families who need convenience and affordability.
+            </p>
+            <p>
+                We are proudly Filipino-owned and operated, and every day we serve our suki with heart. Our team is composed of local residents who know the value of magandang serbisyo at magaan na presyo.
+            </p>
+            <ul>
+                <li>✔ <strong>Tiwala sa serbisyo</strong> – We value your trust.</li>
+                <li>✔ <strong>Pamilyang Pinoy, una sa lahat</strong> – We cater to everyday Filipino needs.</li>
+                <li>✔ <strong>Bayanihan spirit</strong> – Supporting local suppliers and jobs.</li>
+            </ul>
+            <p style="font-size:0.97rem;color:var(--muted);">
+                <strong>Business Registration:</strong><br>
+                DTI Reg. No. 0621930097<br>
+                TIN: 446-839-194-000<br>
+                Barangay Business Clearance No. 2024-091-SN<br>
+                Negros Occidental LGU Compliant
+            </p>
+        </section>
+
+        <section class="products-section" id="products">
+            <h2>Products & Services</h2>
+            <p>Sheilamay Canonigo Market Place is your one-stop shop for everyday home and lifestyle needs. Here’s what you’ll find in our store:</p>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="image/placeholder1.png" alt="Rice">
+                    <div class="product-name">Premium Rice</div>
+                    <div class="product-desc">High-quality local rice, perfect for every meal.</div>
+                    <div class="product-price">₱49.00 / kg</div>
+                    <div class="product-qty">Qty: 20</div>
+                    <button onclick="addToCart('Premium Rice', 49)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="image/placeholder2.png" alt="Shampoo">
+                    <div class="product-name">Shampoo Sachet Pack</div>
+                    <div class="product-desc">Refreshing and gentle. For all hair types.</div>
+                    <div class="product-price">₱15.50</div>
+                    <div class="product-qty">Qty: 35</div>
+                    <button onclick="addToCart('Shampoo Sachet Pack', 15.5)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="image/placeholder3.png" alt="Coffee">
+                    <div class="product-name">Instant Coffee</div>
+                    <div class="product-desc">Rich taste for your morning boost.</div>
+                    <div class="product-price">₱8.99</div>
+                    <div class="product-qty">Qty: 50</div>
+                    <button onclick="addToCart('Instant Coffee', 8.99)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="image/placeholder4.png" alt="Detergent">
+                    <div class="product-name">Laundry Detergent</div>
+                    <div class="product-desc">Removes tough stains, gentle on clothes.</div>
+                    <div class="product-price">₱32.00</div>
+                    <div class="product-qty">Qty: 18</div>
+                    <button onclick="addToCart('Laundry Detergent', 32)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="image/placeholder5.png" alt="Notebook">
+                    <div class="product-name">Notebook (80 pages)</div>
+                    <div class="product-desc">Durable and ideal for school or office.</div>
+                    <div class="product-price">₱23.50</div>
+                    <div class="product-qty">Qty: 25</div>
+                    <button onclick="addToCart('Notebook (80 pages)', 23.5)">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="image/placeholder6.png" alt="Soft Drink">
+                    <div class="product-name">Soft Drink (500ml)</div>
+                    <div class="product-desc">Chilled and refreshing. Perfect for any meal.</div>
+                    <div class="product-price">₱21.00</div>
+                    <div class="product-qty">Qty: 40</div>
+                    <button onclick="addToCart('Soft Drink (500ml)', 21)">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="cart-section" id="cart-section">
+            <div class="cart-title">Your Cart</div>
+            <div id="cart-items" class="cart-items cart-empty">Your cart is empty.</div>
+            <div id="cart-summary"></div>
+            <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled>Checkout</button>
+        </section>
+
+        <section class="delivery-info" id="delivery">
+            <h2>Delivery Information</h2>
+            <ul>
+                <li>🚚 <strong>Same-day delivery</strong> for orders placed before 4:00 PM within Bacolod City.</li>
+                <li><strong>Minimum order for free delivery:</strong> ₱300.00</li>
+                <li>Delivery partners: Local tricycle riders and app-based delivery services (Grab, Toktok, etc.)</li>
+                <li><strong>Order Cutoff Time:</strong> 6:00 PM</li>
+                <li><strong>Payment Modes:</strong> GCash, Cash on Delivery, Maya</li>
+            </ul>
+            <p>For inquiries, call or message us anytime during store hours!</p>
+        </section>
+
+        <section class="contact-info" id="contact">
+            <div class="contact-details">
+                <h2>Contact Us</h2>
+                <strong>Sheilamay Canonigo Market Place</strong><br>
+                #67 Rosal Street, Barangay San Nicolas, City of Bacolod, Negros Occidental, Region VI, Philippines<br>
+                Phone: <a href="tel:+639612037548">+63 961 203 7548</a><br>
+                Email: <a href="mailto:contact@sheilamaycanonigo.com">contact@sheilamaycanonigo.com</a><br>
+                Website: <a href="https://sheilamaycanonigo.com" target="_blank">sheilamaycanonigo.com</a><br>
+                <br>
+                <span>For bulk/wholesale inquiries: <a href="mailto:sales@sheilamaycanonigo.com">sales@sheilamaycanonigo.com</a></span>
+                <br>
+                <span>Follow us on Facebook &amp; Instagram for latest deals and restock updates!</span>
+            </div>
+            <div class="business-hours">
+                <strong>Business Hours:</strong>
+                <br>🕗 Monday to Saturday: 8:00 AM – 6:00 PM
+                <br>🕘 Sunday: Closed (Available for pre-arranged bulk pickup/delivery only)
+            </div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <h2>Testimonials</h2>
+            <ul class="testimonials-list">
+                <li>“Laging maaasahan ang tindahan na ito! Kumpleto sa gamit, malinis, at very friendly staff.”<br>— Tita Marivic D., Resident of Barangay San Nicolas</li>
+                <li>“Kahit hindi ako taga-rito, dito ako bumibili kasi alam kong trusted ang may-ari.”<br>— Renz P., Local delivery rider</li>
+                <li>“Nagpapadeliver kami minsan pag busy sa bahay — on time and maayos!”<br>— Anna Mae R., Nanay of 3, Bacolod City</li>
+            </ul>
+        </section>
+
+        <section class="faq" id="faq">
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <ul class="faq-list">
+                <li><span class="faq-q">Q: Nagde-deliver po ba kayo sa ibang barangay?</span><br>
+                    <span>A: Opo! Kasama sa delivery coverage ang Barangay Singcang, Barangay Villamonte, Barangay Alijis, at iba pa. Just message us to confirm.</span>
+                </li>
+                <li><span class="faq-q">Q: Pwede bang mag-order via text or Viber?</span><br>
+                    <span>A: Yes, pwede po! I-text lang ang inyong order sa +63 961 203 7548 or message us on Facebook.</span>
+                </li>
+                <li><span class="faq-q">Q: Tumatanggap ba kayo ng GCash?</span><br>
+                    <span>A: Yes po, we accept GCash, Maya, and cash payments.</span>
+                </li>
+                <li><span class="faq-q">Q: May resibo ba kapag bumili?</span><br>
+                    <span>A: Yes po. We issue printed or digital receipts upon request.</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a> |
+            <a href="terms.html">Terms of Service</a> |
+            <a href="refund-policy.html">Refund Policy</a>
+        </div>
+        <div class="footer-contact">
+            &copy; 2025 Sheilamay Canonigo Market Place.<br>
+            #67 Rosal Street, Barangay San Nicolas, City of Bacolod, Negros Occidental, Region VI, Philippines<br>
+            Phone: +63 961 203 7548 | Email: contact@sheilamaycanonigo.com
+        </div>
+    </footer>
+    <!-- Floating Cart Button -->
+    <div id="cart-fab" class="cart-fab" title="View Cart">
+        <span aria-hidden="true">🛒</span>
+        <span id="cart-fab-count" class="cart-fab-count">0</span>
+    </div>
+    <!-- Cart Modal -->
+    <div id="cart-modal-bg" class="cart-modal-bg" aria-modal="true" aria-labelledby="cart-modal-title">
+        <div class="cart-modal" role="dialog" aria-modal="true">
+            <div class="cart-modal-title" id="cart-modal-title">Your Cart</div>
+            <div id="cart-modal-items" class="cart-modal-items cart-modal-empty">Your cart is empty.</div>
+            <div id="cart-modal-summary"></div>
+            <div class="cart-modal-btn-row">
+                <button id="cart-modal-close" class="cart-modal-close">Close</button>
+                <button id="cart-modal-checkout" class="cart-modal-checkout" disabled>Checkout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
