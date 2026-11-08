@@ -102,3 +102,11 @@ footer { background: var(--navy-deep); color: #c7d2e5; border-radius: 1.8rem 1.8
   .hero { border-radius: 1.4rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+/* === Quick fix 2026-11-07: mobile menu + layout === */
+@media (max-width: 600px) {
+  /* backdrop-filter made the header the containing block of the fixed menu, so the hidden menu widened the page */
+  header { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: #fff8f3 !important; display: flex; justify-content: space-between; align-items: center !important; }
+  .burger { margin-left: auto; }
+}
+html, body { overflow-x: hidden; }
